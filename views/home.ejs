@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+
+ 
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-between align-items-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+        <span class="fs-4">💸 Expense Tracker</span>
+      </a>
+    </header>
+  </div>
+
+ 
+  <div class="container mt-4 mb-5">
+    <h3 class="mb-3">➕ Add New Expense</h3>
+
+    <form action="/add" method="POST">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Title</label>
+          <input type="text" name="title" class="form-control" required placeholder="e.g. Groceries">
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Amount (₹)</label>
+          <input type="number" name="amount" class="form-control" required placeholder="e.g. 500">
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Category</label>
+          <input type="text" name="category" class="form-control" required placeholder="e.g. Food, Transport">
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Date</label>
+          <input type="date" name="date" class="form-control" required>
+        </div>
+
+        <div class="col-12 mb-3">
+          <label class="form-label">Note (Optional)</label>
+          <textarea name="note" class="form-control" rows="3" placeholder="e.g. Bought fruits and snacks..."></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">💾 Save Expense</button>
+    </form>
+  </div>
+
+  
+  <div class="container">
+    <% if (expenses.length === 0) { %>
+      <div class="alert alert-info text-center">
+        No Expenses Added yet
+      </div>
+    <% } else { %>
+      <div class="row">
+        <% expenses.forEach(exp => { %>
+          <div class="col-md-6 mb-3">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title"><%= exp.title %> - ₹<%= exp.amount %></h5>
+                <h6 class="card-subtitle mb-2 text-muted"><%= exp.category %> | <%= exp.date %></h6>
+                <p class="card-text"><%= exp.note %></p>
+
+               
+                <form action="/delete/<%= exp.id %>" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+
+             
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+<footer class="bg-dark text-white text-center py-4 mt-auto">
+  <div class="container">
+    <div class="mb-2">
+      <a href="https://github.com/Trimman-25" target="_blank" class="text-white me-3" style="text-decoration: none;">
+        <i class="bi bi-github"></i> GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/trimman-koduri-626294323/" target="_blank" class="text-white" style="text-decoration: none;">
+        <i class="bi bi-linkedin"></i> LinkedIn
+      </a>
+    </div>
+    <small>&copy; <%= new Date().getFullYear() %> Trimman — All rights reserved.</small>
+  </div>
+</footer>
+
+</body>
+</html>
